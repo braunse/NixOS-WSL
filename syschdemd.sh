@@ -40,4 +40,9 @@ if [[ $# -gt 0 ]]; then
 else
     cmd="$userShell"
 fi
-exec $sw/nsenter -t $(< /run/systemd.pid) -p -m -- $sw/machinectl -q --uid=@defaultUser@ shell .host /bin/sh -c "cd \"$PWD\"; exec $cmd"
+
+exportVars="WSLENV WT_SESSION WT_PROFILE_ID WSL_INTEROP"
+for var in $exportVars; do
+    exportCmd="${exportCmd}${!var@A};"
+done
+exec $sw/nsenter -t $(< /run/systemd.pid) -p -m -- $sw/machinectl -q --uid=@defaultUser@ shell .host /bin/sh -c "cd \"$PWD\"; ${exportCmd} exec $cmd"
