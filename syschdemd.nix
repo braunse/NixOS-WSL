@@ -8,7 +8,7 @@ pkgs.substituteAll {
 
   buildInputs = with pkgs; [ daemonize ];
 
-  inherit (pkgs) daemonize;
+  inherit (pkgs) daemonize coreutils;
   inherit defaultUser;
   inherit (config.security) wrapperDir;
   fsPackagesPath = lib.makeBinPath config.system.fsPackages;

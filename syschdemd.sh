@@ -38,7 +38,7 @@ if [[ $# -gt 0 ]]; then
     shift
     cmd="$@"
 else
-    cmd="$userShell"
+    cmd="-a '-$(@coreutils@/bin/basename $userShell)' $userShell"
 fi
 
 exportVars="WSLENV WT_SESSION WT_PROFILE_ID WSL_INTEROP"
